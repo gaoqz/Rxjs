@@ -1,99 +1,43 @@
 import { Lesson } from './lesson';
 import * as _ from 'lodash';
+import { Observable, Observer, Subject, BehaviorSubject } from 'rxjs';
 
-export interface Observer {
-    next(data: any);
-}
+class DataStore {
+    private lessonsListSubject = new BehaviorSubject([]);
 
-interface Observable {
-    subscribe(obs: Observer);
-    unsubscribe(obs: Observer);
-}
-
-interface Subject extends Observer, Observable {
-}
-
-class SubjectImplementation implements Subject {
-    private observers: Observer[] = [];
-
-    next(data: any) {
-        this.observers.forEach(obs => obs.next(data));
-    }
-
-    subscribe(obs: Observer) {
-        this.observers.push(obs);
-    }
-
-    unsubscribe(obs: Observer) {
-        _.remove(this.observers, el => el === obs);
-    }
-}
-
-const lessonsListSubject = new SubjectImplementation();
-
-export let lessonList$: Observable = {
-    subscribe: obs => {
-        lessonsListSubject.subscribe(obs);
-        obs.next(lessons);
-    },
-    unsubscribe: obs => lessonsListSubject.unsubscribe(obs)
-};
-
-let lessons: Lesson[] = [];
-
-export function initializeLessonsList(newList: Lesson[]) {
-    lessons = _.cloneDeep(newList);
-    lessonsListSubject.next(lessons);
-}
-
-class DataStore implements Observable {
-    private lessons: Lesson[] = [];
-
-    private lessonsListSubject = new SubjectImplementation();
-
-    // public lessonList$: Observable = {
-    //     subscribe: obs => {
-    //         lessonsListSubject.subscribe(obs);
-    //         obs.next(this.lessons);
-    //     },
-    //     unsubscribe: obs => lessonsListSubject.unsubscribe(obs)
-    // };
-
-    subscribe(obs: Observer) {
-        lessonsListSubject.subscribe(obs);
-        obs.next(this.lessons);
-    }
-
-    unsubscribe(obs: Observer) {
-        lessonsListSubject.unsubscribe(obs);
-    }
+    public lessonList$: Observable<Lesson[]> = this.lessonsListSubject.asObservable();
 
     initializeLessonsList(newList: Lesson[]) {
-        this.lessons = _.cloneDeep(newList);
-        this.broadcast();
+        this.lessonsListSubject.next(_.cloneDeep(newList));
     }
 
     addLesson(newLesson: Lesson) {
-        this.lessons.push(_.cloneDeep(newLesson));
-        this.broadcast();
+        const lessons = this.cloneLessons();
+        lessons.push(_.cloneDeep(newLesson));
+
+        this.lessonsListSubject.next(lessons);
     }
 
     toggleLessonViewed(toggled: Lesson) {
-        const lesson = _.find(this.lessons, les => les.id === toggled.id);
+        const lessons = this.cloneLessons();
+        const lesson = _.find(lessons, les => les.id === toggled.id);
 
         lesson.completed = !lesson.completed;
-        this.broadcast();
+        this.lessonsListSubject.next(lessons);
     }
 
     delete(deleted: Lesson) {
-        _.remove(this.lessons,
-          lesson => lesson.id === deleted.id);
-          this.broadcast();
+          const lessons = this.cloneLessons();
+          _.remove(lessons,
+            lesson => lesson.id === deleted.id);
+
+          this.lessonsListSubject.next(lessons);
     }
 
-    broadcast() {
-        lessonsListSubject.next(_.cloneDeep(this.lessons));
+    private cloneLessons() {
+        return _.cloneDeep(this.lessonsListSubject.getValue());
     }
+
 }
 
 export const store = new DataStore();

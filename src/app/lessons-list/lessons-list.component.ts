@@ -1,5 +1,6 @@
+import { Observer } from 'rxjs';
 import { Lesson } from './../shared/model/lesson';
-import { store, Observer } from './../shared/model/event-bus';
+import { store } from './../shared/model/event-bus';
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
@@ -9,14 +10,22 @@ import * as _ from 'lodash';
   styleUrls: ['./lessons-list.component.scss']
 })
 
-export class LessonsListComponent implements Observer, OnInit {
+export class LessonsListComponent implements Observer<Lesson[]>, OnInit {
 
   lessons: Lesson[] = [];
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit(): void {
-    console.log('Lesson list component is registered as observer ...');
-    store.subscribe(this);
+  ngOnInit() {
+    store.lessonList$.subscribe(lessons => this.next(lessons));
+  }
+
+  error(err: any) {
+    console.log(err);
+  }
+
+  complete() {
+    console.log('completed');
   }
 
   next(data: Lesson[]) {
