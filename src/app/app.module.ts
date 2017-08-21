@@ -1,3 +1,4 @@
+import { CoursesService } from './services/courses.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -38,7 +39,9 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
     AngularFireDatabaseModule,
     RouterModule.forRoot(routerConfig)
   ],
-  providers: [],
+  providers: [
+      CoursesService
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
