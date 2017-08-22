@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserService } from './../services/user.service';
+import { NewsletterService } from './../services/newsletter.service';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-newsletter',
@@ -6,17 +9,24 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./newsletter.component.scss']
 })
 export class NewsletterComponent implements OnInit {
+    firstName$: Observable<string>;
+    constructor(private newsletterService: NewsletterService,
+                private userService: UserService) { }
 
-    @Input() firstName: string;
-    @Output() subscribe = new EventEmitter();
-
-    constructor() { }
-
-    ngOnInit() {}
+    ngOnInit() {
+        this.firstName$ = this.userService.user$
+        .map(user => user.firstName);
+    }
 
     subscribeToNewsletter(emailField) {
-        this.subscribe.emit(emailField.value);
-        emailField.value = '';
+        this.newsletterService.subscribeToNewsletter(emailField.value)
+        .subscribe(
+            () => {
+                emailField.value = '';
+                alert('Subscrive sucessful');
+            },
+            console.error
+        );
     }
 
 }
