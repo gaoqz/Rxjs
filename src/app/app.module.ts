@@ -1,3 +1,5 @@
+import { UserService } from './services/user.service';
+import { NewsletterService } from './services/newsletter.service';
 import { CoursesService } from './services/courses.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -20,6 +22,10 @@ import { EventBusExperimentsComponent } from './event-bus-experiments/event-bus-
 import { HomeComponent } from './home/home.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
+import { LoginComponent } from './login/login.component';
+import { TopMenuComponent } from './top-menu/top-menu.component';
+import { CourseDetailHeaderComponent } from './course-detail-header/course-detail-header.component';
+import { NewsletterComponent } from './newsletter/newsletter.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +36,11 @@ import { CoursesListComponent } from './courses-list/courses-list.component';
     EventBusExperimentsComponent,
     HomeComponent,
     CourseDetailComponent,
-    CoursesListComponent
+    CoursesListComponent,
+    LoginComponent,
+    TopMenuComponent,
+    CourseDetailHeaderComponent,
+    NewsletterComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +52,9 @@ import { CoursesListComponent } from './courses-list/courses-list.component';
     RouterModule.forRoot(routerConfig)
   ],
   providers: [
-      CoursesService
+      CoursesService,
+      NewsletterService,
+      UserService
     ],
   bootstrap: [AppComponent]
 })

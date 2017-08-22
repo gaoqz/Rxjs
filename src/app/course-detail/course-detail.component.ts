@@ -1,3 +1,5 @@
+import { UserService } from './../services/user.service';
+import { NewsletterService } from './../services/newsletter.service';
 import { CoursesService } from './../services/courses.service';
 import { Lesson } from './../shared/model/lesson';
 import { Course } from './../shared/model/course';
@@ -16,9 +18,14 @@ export class CourseDetailComponent implements OnInit {
   lessons: Lesson[];
 
   constructor(private route: ActivatedRoute,
-              private courseService: CoursesService) {
+              private courseService: CoursesService,
+              private newsletterService: NewsletterService,
+              private userService: UserService) {
 
-    route.params
+  }
+
+  ngOnInit() {
+    this.route.params
     .subscribe(params => {
       const courseUrl = params['id'];
 
@@ -28,14 +35,17 @@ export class CourseDetailComponent implements OnInit {
 
         this.courseService.findLessonsForCourse(this.course.id)
         .subscribe(lessons => this.lessons = lessons);
-
       });
 
     });
-
   }
 
-  ngOnInit() {
+  onSubscribe(email: string) {
+      this.newsletterService.subscribeToNewsletter(email)
+      .subscribe(
+          () => alert('Subscription successful'),
+          console.error
+      );
   }
 
 }
