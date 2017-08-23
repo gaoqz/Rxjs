@@ -1,5 +1,5 @@
 import { Lesson } from './../shared/model/lesson';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-lessons-list',
@@ -10,8 +10,13 @@ import { Component, Input } from '@angular/core';
 export class LessonsListComponent {
 
   @Input() lessons: Lesson[];
+  @Output() selected = new EventEmitter<Lesson>();
 
   constructor() {
+  }
+
+  select(lesson: Lesson) {
+      this.selected.next(lesson);
   }
 
 }
