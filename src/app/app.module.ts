@@ -1,3 +1,4 @@
+import { CoursesHttpService } from './services/courses-http.service';
 import { UserService } from './services/user.service';
 import { NewsletterService } from './services/newsletter.service';
 import { CoursesService } from './services/courses.service';
@@ -26,6 +27,8 @@ import { LoginComponent } from './login/login.component';
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { CourseDetailHeaderComponent } from './course-detail-header/course-detail-header.component';
 import { NewsletterComponent } from './newsletter/newsletter.component';
+import { AllLessonsComponent } from './all-lessons/all-lessons.component';
+import { CourseComponent } from './course/course.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,9 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
     LoginComponent,
     TopMenuComponent,
     CourseDetailHeaderComponent,
-    NewsletterComponent
+    NewsletterComponent,
+    AllLessonsComponent,
+    CourseComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,8 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
   providers: [
       CoursesService,
       NewsletterService,
-      UserService
+      UserService,
+      CoursesHttpService
     ],
   bootstrap: [AppComponent]
 })

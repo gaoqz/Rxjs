@@ -1,3 +1,4 @@
+import { AllLessonsComponent } from './all-lessons/all-lessons.component';
 import { LoginComponent } from './login/login.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { HomeComponent } from './home/home.component';
@@ -11,6 +12,10 @@ export const routerConfig: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'all-lessons',
+        component: AllLessonsComponent
     },
     {
         path: 'course/:id',
