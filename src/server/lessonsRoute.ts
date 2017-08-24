@@ -4,6 +4,13 @@ import * as _ from 'lodash';
 export function lessonsRoute(req, res) {
     console.log(req.query);
 
+    const random = Math.ceil(Math.random() * 10);
+
+    if (random % 2 === 1) {
+        res.sendStatus(500);
+        return;
+    }
+
     const courseId = parseInt(req.query['courseId'], 0) - 1,
         pageNumber = parseInt(req.query['pageNumber'], 0),
         pageSize = parseInt(req.query['pageSize'], 0);

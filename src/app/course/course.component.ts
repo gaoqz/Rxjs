@@ -1,3 +1,4 @@
+import { MessagesService } from './../services/messages.service';
 import { LessonsPagerService } from './../services/lessons-pager.service';
 import { CoursesHttpService } from './../services/courses-http.service';
 import { Lesson } from './../shared/model/lesson';
@@ -19,21 +20,34 @@ export class CourseComponent implements OnInit, OnDestroy {
     detail$: Observable<Lesson>;
 
     constructor(private courseHttpService: CoursesHttpService,
-                private lessonsPagerService: LessonsPagerService) { }
+                private lessonsPagerService: LessonsPagerService,
+                private messagesService: MessagesService) { }
 
     ngOnInit() {
         this.course$ = this.courseHttpService.findCourseById(this.id);
         this.lessons$ = this.lessonsPagerService.lessonsPager$;
 
-        this.lessonsPagerService.loadFirstPage(this.id);
+        this.lessonsPagerService.loadFirstPage(this.id)
+        .subscribe(
+            () => {},
+            err => this.messagesService.error('error loading the first page')
+        );
     }
 
-    previoueLessonsPage() {
-        this.lessonsPagerService.previous();
+    previousLessonsPage() {
+        this.lessonsPagerService.previous()
+        .subscribe(
+            () => {},
+            err => this.messagesService.error('error loading the previous page')
+        );
     }
 
     nextLessonsPage() {
-        this.lessonsPagerService.next();
+        this.lessonsPagerService.next()
+        .subscribe(
+            () => {},
+            err => this.messagesService.error('error loading the next page')
+        );
     }
 
     backToMaster() {
