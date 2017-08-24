@@ -1,3 +1,4 @@
+import { CourseDetailResolver } from './course-detail/course-detail.resolver';
 import { MessagesService } from './services/messages.service';
 import { CoursesHttpService } from './services/courses-http.service';
 import { UserService } from './services/user.service';
@@ -33,6 +34,7 @@ import { CourseComponent } from './course/course.component';
 import { LessonDetailComponent } from './lesson-detail/lesson-detail.component';
 import { SafeUrlPipe } from './shared/pipes/safe-url.pipe';
 import { MessagesComponent } from './messages/messages.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { MessagesComponent } from './messages/messages.component';
     CourseComponent,
     LessonDetailComponent,
     SafeUrlPipe,
-    MessagesComponent
+    MessagesComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { MessagesComponent } from './messages/messages.component';
       NewsletterService,
       UserService,
       CoursesHttpService,
-      MessagesService
+      MessagesService,
+      CourseDetailResolver
     ],
   bootstrap: [AppComponent]
 })
