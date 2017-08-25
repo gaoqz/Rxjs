@@ -1125,6 +1125,10 @@ cookie@0.3.1:
   version "0.3.1"
   resolved "http://registry.npm.taobao.org/cookie/download/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
+cookies-js@^1.2.3:
+  version "1.2.3"
+  resolved "http://registry.npm.taobao.org/cookies-js/download/cookies-js-1.2.3.tgz#03315049e7c52bee3f73186a69167eab0ddb2d31"
+
 core-js@^2.2.0, core-js@^2.4.0, core-js@^2.4.1:
   version "2.5.0"
   resolved "http://registry.npm.taobao.org/core-js/download/core-js-2.5.0.tgz#569c050918be6486b3837552028ae0466b717086"
